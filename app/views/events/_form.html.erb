@@ -1,0 +1,30 @@
+<%= form_with model: @event, local: true do |form| %>
+  <div class="field">
+    <%= form.label :name, "Event Name" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date, "Start Date" %>
+    <%= form.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_time, "Start Time" %>
+    <%= form.time_select :start_time, :ampm => true, :minute_step => 15 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_time, "End Time" %>
+    <%= form.time_select :end_time, :ampm => true, :minute_step => 15 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location, "Location" %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="actions">
+     <%= form.submit event.new_record? ? 'Create Event' : 'Update Event' %>
+  </div>
+<% end %>

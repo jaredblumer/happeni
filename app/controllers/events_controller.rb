@@ -18,8 +18,9 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build(event_params)
+    clear_times_if_all_day
     if @event.save
-      redirect_to events_path, notice: "Event was successfully deleted."
+      redirect_to events_path, notice: "Event was successfully created."
     else
       render :new
     end
@@ -46,5 +47,12 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:user_id, :name, :start_date, :start_time, :end_time, :location)
+  end
+
+  def clear_times_if_all_day
+    if @event.all_day?
+      @event.start_time = nil
+      @event.end_time = nil
+    end
   end
 end

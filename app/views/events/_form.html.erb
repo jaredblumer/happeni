@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= form.label :start_date, "Start Date" %>
-    <%= form.date_select :start_date, order: [:month, :day, :year], start_year: 2024, end_year: 2034, required: true %>
+    <%= form.date_select :start_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true %>
   </div>
 
   <div class="field">

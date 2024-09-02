@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= form.label :start_date, "Start Date" %>
-    <%= form.date_select :start_date, required: true %>
+    <%= form.date_select :start_date, order: [:month, :day, :year], start_year: 2024, end_year: 2034, required: true %>
   </div>
 
   <div class="field">
@@ -28,12 +28,12 @@
   <div id="time_fields">
     <div class="field">
       <%= form.label :start_time, "Start Time" %>
-      <%= form.time_select :start_time, minute_step: 15, required: true %>
+      <%= form.time_select :start_time, ampm: true, minute_step: 15, required: true %>
     </div>
 
     <div class="field">
       <%= form.label :end_time, "End Time" %>
-      <%= form.time_select :end_time, minute_step: 15, required: true %>
+      <%= form.time_select :end_time, ampm: true, minute_step: 15, required: true %>
     </div>
   </div>
 
@@ -46,3 +46,24 @@
     <%= form.submit event.new_record? ? 'Create Event' : 'Update Event' %>
   </div>
 <% end %>
+
+<script>
+    document.addEventListener("turbo:load", () => {
+        const allDayCheckbox = document.getElementById("all_day_checkbox");
+        const timeFields = document.getElementById("time_fields");
+
+        if (allDayCheckbox && timeFields) {
+          function toggleTimeFields() {
+            if (allDayCheckbox.checked) {
+                timeFields.style.display = "none";
+            } else {
+                timeFields.style.display = "block";
+            }
+          }
+
+          toggleTimeFields();
+
+          allDayCheckbox.addEventListener("change", toggleTimeFields);
+        }
+    });
+</script>

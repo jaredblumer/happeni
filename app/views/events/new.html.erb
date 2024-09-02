@@ -3,3 +3,25 @@
 <%= render 'form', event: @event %>
 
 <%= link_to 'Back', events_path %>
+
+<script>
+    document.addEventListener("turbo:load", () => {
+        const allDayCheckbox = document.getElementById("all_day_checkbox");
+        const timeFields = document.getElementById("time_fields");
+
+        console.log(allDayCheckbox); // Should log the checkbox element
+        console.log(timeFields);     // Should log the time fields container element
+
+        function toggleTimeFields() {
+        console.log('Checkbox checked:', allDayCheckbox.checked);
+        if (allDayCheckbox.checked) {
+            timeFields.style.display = "none";
+        } else {
+            timeFields.style.display = "block";
+        }
+        }
+
+        // Add event listener to toggle visibility on checkbox change
+        allDayCheckbox.addEventListener("change", toggleTimeFields);
+    });
+</script>

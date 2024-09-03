@@ -14,5 +14,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#index"
 
-  resources :events
+  resources :events do
+    collection do
+      get "past_events"
+    end
+  end
 end

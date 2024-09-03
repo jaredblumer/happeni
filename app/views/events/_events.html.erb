@@ -1,0 +1,43 @@
+<% if @events.any? %>
+  <% @events.each do |event| %>
+    <div class="event">
+      <p>
+        <strong>Event Name:</strong>
+        <%= event.name %>
+      </p>
+
+      <p>
+        <strong>Date:</strong>
+        <%= event.start_date.strftime("%B %d, %Y") %>
+      </p>
+
+      <% if event.all_day == false %>
+        <p>
+          <strong>Start Time:</strong>
+          <%= event.start_time.strftime("%I:%M %p") %>
+        </p>
+
+        <p>
+          <strong>End Time:</strong>
+          <%= event.end_time.strftime("%I:%M %p") %>
+        </p>
+      <% end %>
+
+      <% if event.location != ""%>
+        <p>
+          <strong>Location:</strong>
+          <%= event.location %>
+        </p>
+      <% end %>
+
+      <%= link_to 'Edit', edit_event_path(event) %> |
+      <%= link_to 'Delete', event_path(event), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    </div>
+
+    <hr>
+  <% end %>
+<% else %>
+  <p>You have no events scheduled.</p>
+<% end %>
+
+<%= link_to 'New Event', new_event_path %>

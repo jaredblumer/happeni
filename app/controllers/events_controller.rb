@@ -3,7 +3,11 @@ class EventsController < ApplicationController
   before_action :set_event, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @events = current_user.events.order(:start_date, :start_time)
+    @events = current_user.events.where("start_date >= ?", Date.today).order(:start_date, :start_time)
+  end
+
+  def past_events
+    @events = current_user.events.where("start_date < ?", Date.today).order(:start_date, :start_time)
   end
 
   def show

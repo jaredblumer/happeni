@@ -26,7 +26,7 @@
           <li><%= link_to 'Past Events', past_events_events_path %></li>
           <li><%= link_to 'New Event', new_event_path %></li>
           <% if user_signed_in? %>
-            <li><%= link_to 'Log Out', destroy_user_session_path, method: :delete %></li>
+            <li><%= button_to 'Log Out', destroy_user_session_path, method: :delete %></li>
           <% else %>
             <li><%= link_to 'Log In', new_user_session_path %></li>
             <li><%= link_to 'Sign Up', new_user_registration_path %></li>

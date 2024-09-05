@@ -37,7 +37,7 @@ Follow these steps:
 Make sure you have the necessary dependencies installed:
 
 ```bash
-bundle install  # Install Ruby gems
+bundle install
 ```
 
 ### 2. Run TailwindCSS Watcher

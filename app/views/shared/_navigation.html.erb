@@ -7,14 +7,13 @@
       <span class="ml-3 text-xl">Pleasant Events</span>
     </a>
     <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-      <%= link_to "My Events", events_path, class: "mr-5 hover:text-gray-900"  %>
-      <%= link_to "Past Events", past_events_events_path, class: "mr-5 hover:text-gray-900" %>
-      <%= link_to "New Event", new_event_path, class: "mr-5 hover:text-gray-900" %>
       <% if user_signed_in? %>
+        <%= link_to "My Events", events_path, class: "mr-5 hover:text-gray-900"  %>
+        <%= link_to "Past Events", past_events_events_path, class: "mr-5 hover:text-gray-900" %>
+        <%= link_to "New Event", new_event_path, class: "mr-5 hover:text-gray-900" %>
         <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "mr-5 hover:text-gray-900" %>
       <% else %>
         <%= link_to "Log In", new_user_session_path, class: "mr-5 hover:text-gray-900" %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "mr-5 hover:text-gray-900"  %>
       <% end %>
     </nav>
   </div>

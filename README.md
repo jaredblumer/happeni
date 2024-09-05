@@ -14,7 +14,7 @@ This Ruby on Rails application allows users to log pleasant events they are look
 
 ## To-Do
 
-:construction: Plesant Events is currently under construction. :construction:
+:construction: Pleasant Events is currently under construction. :construction:
 
 The following tasks are yet to be completed:
 

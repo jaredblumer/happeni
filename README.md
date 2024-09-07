@@ -2,7 +2,7 @@
 
 Inspired by Cognitive Behavioral Therapy (CBT), this Pleasant Event Tracker app empowers users to track and anticipate upcoming pleasant events, with personalized reminders to keep positivity on the horizon.
 
-[!Pleasant Events Screen Recording](./app/assets/media/screen-recording.gif)
+![Pleasant Events Screen Recording](./app/assets/media/screen-recording.gif)
 
 ## Overview
 

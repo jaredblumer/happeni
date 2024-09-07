@@ -2,6 +2,8 @@
 
 Inspired by Cognitive Behavioral Therapy (CBT), this Pleasant Event Tracker app empowers users to track and anticipate upcoming pleasant events, with personalized reminders to keep positivity on the horizon.
 
+[!Pleasant Events Screen Recording](app/assets/media/screen-recording.gif)
+
 ## Overview
 
 This Ruby on Rails application allows users to log pleasant events they are looking forward to and receive regular reminders. The app is designed to help users maintain a positive outlook by focusing on enjoyable future activities, a technique often used in CBT to improve mental well-being.

@@ -16,13 +16,20 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
   </head>
 
   <body>
-    <%= render "shared/navigation" %>
+    <div class="min-h-screen flex flex-col">
+      <div class="flex-grow">
+        <%= render "shared/navigation" %>
 
-    <div class="container mx-auto">
-      <%= yield %>
+        <div class="container mx-auto">
+          <%= yield %>
+        </div>
+       </div>
+
+      <%= render "shared/footer" %>
     </div>
   </body>
 </html>

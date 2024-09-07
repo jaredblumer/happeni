@@ -1,8 +1,9 @@
-<%= form_with model: event, local: true do |form| %>
+<%= form_with model: event, local: true, class: "w-full max-w-lg mx-auto bg-white border-2 border-gray-200 p-8 rounded-lg shadow-lg" do |form| %>
+  
   <% if event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-      <ul>
+    <div id="error_explanation" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+      <h2 class="font-semibold mb-2"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <ul class="list-disc pl-5">
         <% event.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -10,60 +11,61 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name, "Event Name" %>
-    <%= form.text_field :name, required: true %>
+  <div class="mb-4">
+    <%= form.label :name, "Event Name", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.text_field :name, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
 
-  <div class="field">
-    <%= form.label :start_date, "Start Date" %>
-    <%= form.date_select :start_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true %>
+  <div class="mb-4">
+    <%= form.label :start_date, "Start Date", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.date_select :start_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
 
-  <div class="field">
-    <%= form.label :all_day, "All Day" %>
-    <%= form.check_box :all_day, id: "all_day_checkbox" %>
+  <div class="mb-4">
+    <%= form.label :all_day, "All Day", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.check_box :all_day, id: "all_day_checkbox", class: "form-checkbox text-indigo-600" %>
   </div>
 
-  <div id="time_fields">
-    <div class="field">
-      <%= form.label :start_time, "Start Time" %>
-      <%= form.time_select :start_time, ampm: true, minute_step: 15, required: true %>
+  <div id="time_fields" class="grid grid-cols-2 gap-4">
+    <div class="mb-4">
+      <%= form.label :start_time, "Start Time", class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.time_select :start_time, ampm: true, minute_step: 15, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
 
-    <div class="field">
-      <%= form.label :end_time, "End Time" %>
-      <%= form.time_select :end_time, ampm: true, minute_step: 15, required: true %>
+    <div class="mb-4">
+      <%= form.label :end_time, "End Time", class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.time_select :end_time, ampm: true, minute_step: 15, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
   </div>
 
-  <div class="field">
-    <%= form.label :location, "Location" %>
-    <%= form.text_field :location, required: true %>
+  <div class="mb-4">
+    <%= form.label :location, "Location", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.text_field :location, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit event.new_record? ? 'Create Event' : 'Update Event' %>
+  <div class="mt-6">
+    <%= form.submit event.new_record? ? 'Create Event' : 'Update Event', class: "w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
+
 <% end %>
 
 <script>
-    document.addEventListener("turbo:load", () => {
-        const allDayCheckbox = document.getElementById("all_day_checkbox");
-        const timeFields = document.getElementById("time_fields");
+  document.addEventListener("turbo:load", () => {
+      const allDayCheckbox = document.getElementById("all_day_checkbox");
+      const timeFields = document.getElementById("time_fields");
 
-        if (allDayCheckbox && timeFields) {
-          function toggleTimeFields() {
-            if (allDayCheckbox.checked) {
-                timeFields.style.display = "none";
-            } else {
-                timeFields.style.display = "block";
-            }
+      if (allDayCheckbox && timeFields) {
+        function toggleTimeFields() {
+          if (allDayCheckbox.checked) {
+              timeFields.style.display = "none";
+          } else {
+              timeFields.style.display = "grid";
           }
-
-          toggleTimeFields();
-
-          allDayCheckbox.addEventListener("change", toggleTimeFields);
         }
-    });
+
+        toggleTimeFields();
+
+        allDayCheckbox.addEventListener("change", toggleTimeFields);
+      }
+  });
 </script>

@@ -1,43 +1,51 @@
-<% if @events.any? %>
-  <% @events.each do |event| %>
-    <div class="event">
-      <p>
-        <strong>Event Name:</strong>
-        <%= event.name %>
-      </p>
-
-      <p>
-        <strong>Date:</strong>
-        <%= event.start_date.strftime("%B %d, %Y") %>
-      </p>
-
-      <% if event.all_day == false %>
-        <p>
-          <strong>Start Time:</strong>
-          <%= event.start_time.strftime("%I:%M %p") %>
-        </p>
-
-        <p>
-          <strong>End Time:</strong>
-          <%= event.end_time.strftime("%I:%M %p") %>
-        </p>
-      <% end %>
-
-      <% if event.location != ""%>
-        <p>
-          <strong>Location:</strong>
-          <%= event.location %>
-        </p>
-      <% end %>
-
-      <%= link_to 'Edit', edit_event_path(event) %> |
-      <%= link_to 'Delete', event_path(event), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+<div class="flex flex-wrap -m-4">
+  <% if @events.any? %>
+    <% @events.each do |event| %>
+      <div class="p-4 w-full md:w-1/2">
+        <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col">
+          <div class="flex w-full">
+            <!-- First column -->
+            <div class="w-1/2 flex-shrink-0 flex flex-col">
+              <% today = Date.today %>
+              <% days_away = (event.start_date - today).to_i %>
+              <h2 class="text-xl text-indigo-500">
+                <% if days_away > 0 %>
+                  <%= pluralize(days_away, "Day") %> Away
+                <% elsif days_away == 0 %>
+                  Today!
+                <% else %>
+                  <%= pluralize(days_away.abs, "Day") %> Ago
+                <% end %>
+              </h2>
+              <span class="font-semibold title-font text-gray-700"><%= event.start_date.strftime("%A") %></span>
+              <span class="mt-1 text-gray-500 text-sm"><%= event.start_date.strftime("%b %d, %Y") %></span>
+              <% if event.all_day == false %>
+                <span class="mt-1 text-gray-500 text-xs"><%= event.start_time.strftime("%I:%M %p") %> - <%= event.end_time.strftime("%I:%M %p") %></span>
+              <% end %>
+            </div>
+            
+            <!-- Second column -->
+            <div class="w-1/2 flex-grow pl-8">
+              <h2 class="text-2xl text-indigo-500"><%= event.name %></h2>
+              <p class="leading-relaxed"><%= event.location %></p>
+              <%= link_to 'Edit', edit_event_path(event), class: "text-xs text-indigo-500 inline-flex items-center mt-4" %>
+              <span class="text-xs">|</span>
+              <%= link_to 'Delete', event_path(event), method: :delete, class: "text-xs text-indigo-500 inline-flex items-center mt-4", data: { turbo_method: :delete, turbo_confirm: 'Delete event?' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <!-- Card for no events -->
+    <div class="p-4 w-full">
+      <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 flex-col">
+        <div class="w-full text-center">
+          <h2 class="text-2xl text-gray-700">No Events Available</h2>
+          <p class="leading-relaxed text-gray-500">It seems like there are no upcoming events at the moment.</p>
+          <%= link_to 'Create New Event', new_event_path, class: "mt-4 inline-flex items-center text-indigo-500 text-sm" %>
+        </div>
+      </div>
     </div>
-
-    <hr>
   <% end %>
-<% else %>
-  <p>You have no events scheduled.</p>
-<% end %>
-
-<%= link_to 'New Event', new_event_path %>
+</div>

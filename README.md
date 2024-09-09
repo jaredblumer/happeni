@@ -20,9 +20,6 @@ This Ruby on Rails application allows users to log pleasant events they are look
 
 The following tasks are yet to be completed:
 
-- **Create Custom Devise Login and Sign-Up Forms:** Utilize [Tailblocks](https://tailblocks.cc/) form templates and update Devise sign-up and login forms. Update the placeholder Sign-Up form on the app's index page.
-- **Style "My Events", "Past Events", and "New Event" Pages:** Utilize Tailblocks cards and forms on events pages.
-- **Add Footer:** Add a footer to the application.
 - **Create Daily Reminder Email:** Build daily reminder email listing upcoming future events and the number of days until the events arrive.
 - **Build Forgot Password Email:** Utilize Devise to create a Forgot Password email.
 - **Write Tests:** Utilize Capybara and RSpec to write tests.

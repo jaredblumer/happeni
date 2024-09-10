@@ -2,4 +2,15 @@
   <h1 class="text-4xl font-bold">Past Events</h1>
 </div>
 
-<%= render 'events', event: @events %>
+<% if @events.any? %>
+  <%= render 'events' %>
+<% else %>
+  <%= render 'no_past_events' %>
+<% end %>
+
+<div class="text-center my-6">
+  <div class="flex justify-center space-x-4">
+    <%= link_to 'Create New Event', new_event_path, class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600" %>
+    <%= button_to 'Show Event Ideas', event_ideas_path, method: :get, remote: true, class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600" %>
+  </div>
+</div>

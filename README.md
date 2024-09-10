@@ -1,22 +1,22 @@
-# Pleasant Events
+# Happeni
 
-Inspired by Cognitive Behavioral Therapy (CBT), this Pleasant Event Tracker app empowers users to track and anticipate upcoming pleasant events, with personalized reminders to keep positivity on the horizon.
+Inspired by Cognitive Behavioral Therapy (CBT), this Pleasant Event Tracker app empowers users to track and anticipate upcoming Happeni, with personalized reminders to keep positivity on the horizon.
 
-![Pleasant Events Screen Recording](./app/assets/media/screen-recording.gif)
+![Happeni Screen Recording](./app/assets/media/screen-recording.gif)
 
 ## Overview
 
-This Ruby on Rails application allows users to log pleasant events they are looking forward to and receive regular reminders. The app is designed to help users maintain a positive outlook by focusing on enjoyable future activities, a technique often used in CBT to improve mental well-being.
+This Ruby on Rails application allows users to log Happeni they are looking forward to and receive regular reminders. The app is designed to help users maintain a positive outlook by focusing on enjoyable future activities, a technique often used in CBT to improve mental well-being.
 
 ## Features
 
-- **Event Tracking:** Users can add and manage upcoming pleasant events by entering event names and dates.
+- **Event Tracking:** Users can add and manage upcoming Happeni by entering event names and dates.
 - **Reminders:** The app provides regular reminders for upcoming events to keep users engaged and looking forward to their activities.
 - **User-Friendly Interface:** Simple and intuitive design that makes tracking events easy and enjoyable.
 
 ## To-Do
 
-:construction: Pleasant Events is currently under construction. :construction:
+:construction: Happeni is currently under construction. :construction:
 
 The following tasks are yet to be completed:
 

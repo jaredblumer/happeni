@@ -34,6 +34,9 @@
         </div>
 
         <%= f.submit "Log In", class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-md" %>
+        <p class="text-xs text-gray-500 mt-3">
+          Don't have an account? <%= link_to "Sign up here.", new_registration_path(resource_name), class: "text-indigo-500 hover:underline" %>
+        </p>
       <% end %>
     </div>
   </div>

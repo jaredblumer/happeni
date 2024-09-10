@@ -28,7 +28,7 @@ class EventsController < ApplicationController
     @event = current_user.events.build(event_params)
 
     if @event.save
-      redirect_to events_path, notice: "Event was successfully created."
+      redirect_to events_path
     else
       render :new
     end
@@ -36,7 +36,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      redirect_to events_path, notice: "Event was successfully deleted."
+      redirect_to events_path
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event.destroy
-    redirect_to events_path, notice: "Event was successfully deleted."
+    redirect_to events_path
   end
 
   private

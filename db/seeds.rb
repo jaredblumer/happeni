@@ -159,7 +159,6 @@ EventIdea.create([
   { name: 'Listen to Music' },
   { name: 'Argue a Point' },
   { name: 'Knit, Crochet, Embroider, or Do Fancy Needlework' },
-  { name: 'Amuse People' },
   { name: 'Go to a Barber or Beautician' },
   { name: 'Have House Guests' },
   { name: 'Be with Someone I Love' },

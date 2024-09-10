@@ -84,7 +84,7 @@ EventIdea.create([
   { name: 'Plan or Organize Something' },
   { name: 'Have a Drink by Myself' },
   { name: 'Listen to the Sounds of Nature' },
-  { name: 'Date' },
+  { name: 'Go on a Date' },
   { name: 'Have a Lively Talk' },
   { name: 'Listen to the Radio' },
   { name: 'Have Friends Come to Visit' },

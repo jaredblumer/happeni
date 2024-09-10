@@ -16,6 +16,8 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.name = params[:event][:name] if params[:event] && params[:event][:name].present?
+    @event.start_time = Time.current.change(hour: 12, min: 0)
+    @event.end_time = @event.start_time + 1.hour
   end
 
   def edit

@@ -1,6 +1,6 @@
 # Happeni
 
-Inspired by Cognitive Behavioral Therapy (CBT), this Pleasant Event Tracker app empowers users to track and anticipate upcoming Happeni, with personalized reminders to keep positivity on the horizon.
+Inspired by Cognitive Behavioral Therapy (CBT), our app empowers users to create happiness by choosing and anticipating upcoming plesant events. With personalized reminders, we help you stay focused on the positive moments that brighten your life.
 
 ![Happeni Screen Recording](./app/assets/media/screen-recording.gif)
 

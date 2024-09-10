@@ -1,0 +1,2 @@
+class EventIdea < ApplicationRecord
+end

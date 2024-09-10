@@ -1,0 +1,32 @@
+<div class="bg-indigo-500 text-white py-8 px-4 rounded-lg mb-6 text-center shadow-lg">
+  <h1 class="text-4xl font-bold">Event Ideas</h1>
+</div>
+
+<div class="max-w-6xl mx-auto p-4">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Left side: Copy with header and smaller width -->
+    <div class="flex flex-col justify-center max-w-md mx-auto lg:mx-0">
+      <h2 class="text-2xl text-gray-800 font-semibold mb-4">Get Some Inspiration</h2>
+      <p class="text-gray-600 mb-4">
+        Pick an event from the list on the right to add it to your calendar, or click "Show More Ideas" below for more options!
+      </p>
+      <%= button_to 'Show More Ideas', event_ideas_path, method: :get, remote: true, class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600" %>
+    </div>
+
+    <!-- Right side: Event Options -->
+    <div class="flex flex-wrap -m-4">
+      <% @event_ideas.each do |event_idea| %>
+        <div class="p-4 w-full sm:w-1/2">
+          <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-6 flex-col justify-between">
+            <h2 class="text-lg text-indigo-500 font-semibold">
+              <%= event_idea.name %>
+            </h2>
+            <div class="mt-4">
+              <%= link_to 'Select', new_event_path(event: { name: event_idea.name }), class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600 w-full" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

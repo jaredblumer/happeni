@@ -1,26 +1,49 @@
 <header class="text-gray-600 body-font">
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-        <rect x="4" y="5" width="16" height="16" rx="2" ry="2" stroke="white" stroke-width="2" fill="none"/>
-        <line x1="16" y1="3" x2="16" y2="7" stroke="white" stroke-width="2"/>
-        <line x1="8" y1="3" x2="8" y2="7" stroke="white" stroke-width="2"/>
-        <line x1="4" y1="11" x2="20" y2="11" stroke="white" stroke-width="2"/>
-        <rect x="7" y="14" width="3" height="3" fill="white"/>
-        <rect x="14" y="14" width="3" height="3" fill="white"/>
-      </svg>
-      <span class="ml-3 text-xl">Pleasant Events</span>
-    </a>
-    <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col lg:flex-row items-center">
+    <div class="flex justify-between w-full lg:w-auto">
+      <!-- Logo and Title -->
+      <a class="flex title-font font-medium items-center text-gray-900 mb-4 lg:mb-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+          <rect x="4" y="5" width="16" height="16" rx="2" ry="2" stroke="white" stroke-width="2" fill="none"/>
+          <line x1="16" y1="3" x2="16" y2="7" stroke="white" stroke-width="2"/>
+          <line x1="8" y1="3" x2="8" y2="7" stroke="white" stroke-width="2"/>
+          <line x1="4" y1="11" x2="20" y2="11" stroke="white" stroke-width="2"/>
+          <rect x="7" y="14" width="3" height="3" fill="white"/>
+          <rect x="14" y="14" width="3" height="3" fill="white"/>
+        </svg>
+        <span class="ml-3 text-xl">Pleasant Events</span>
+      </a>
+
+      <!-- Hamburger menu button visible on medium and smaller screens -->
+      <button class="inline-flex items-center lg:hidden text-gray-600" id="menu-button" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation links hidden on medium screens, visible on large screens -->
+    <nav class="hidden w-full lg:flex lg:items-center lg:w-auto lg:mr-auto lg:ml-4 lg:py-1 lg:pl-4 lg:border-l lg:border-gray-400" id="menu">
       <% if user_signed_in? %>
-        <%= link_to "Upcoming Events", events_path, class: "mr-5 hover:text-gray-900"  %>
-        <%= link_to "Past Events", past_events_events_path, class: "mr-5 hover:text-gray-900" %>
-        <%= link_to "New Event", new_event_path, class: "mr-5 hover:text-gray-900" %>
-        <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "mr-5 hover:text-gray-900" %>
+        <%= link_to "Upcoming Events", events_path, class: "block text-center py-2 lg:mr-5 text-gray-700 hover:text-gray-900" %>
+        <%= link_to "Past Events", past_events_events_path, class: "block text-center py-2 lg:mr-5 text-gray-700 hover:text-gray-900" %>
+        <%= link_to "New Event", new_event_path, class: "block text-center py-2 lg:mr-5 text-gray-700 hover:text-gray-900" %>
+        <%= link_to "Event Ideas", event_ideas_path, class: "block text-center py-2 lg:mr-5 text-gray-700 hover:text-gray-900" %>
+        <div class="block text-center py-2 lg:mr-5">
+          <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "w-full text-gray-700 hover:text-gray-900" %>
+        </div> 
       <% else %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "mr-5 hover:text-gray-900" %>
-        <%= link_to "Log In", new_user_session_path, class: "mr-5 hover:text-gray-900" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "block text-center py-2 lg:mr-5 text-gray-700 hover:text-gray-900" %>
+        <%= link_to "Log In", new_user_session_path, class: "block text-center py-2 lg:mr-5 text-gray-700 hover:text-gray-900" %>
       <% end %>
     </nav>
   </div>
 </header>
+
+<!-- JavaScript for the dropdown menu toggle -->
+<script>
+  document.getElementById('menu-button').addEventListener('click', function() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('hidden');
+  });
+</script>

@@ -15,6 +15,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @event.name = params[:event][:name] if params[:event] && params[:event][:name].present?
   end
 
   def edit

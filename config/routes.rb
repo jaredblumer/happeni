@@ -21,4 +21,6 @@ Rails.application.routes.draw do
       get "past_events"
     end
   end
+
+  resources :event_ideas, only: [ :index ]
 end

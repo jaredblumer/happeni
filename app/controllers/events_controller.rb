@@ -4,6 +4,7 @@ class EventsController < ApplicationController
 
   def index
     @events = current_user.events.where("start_date >= ?", Date.today).order(:start_date, :start_time)
+    @past_events_exist = current_user.events.where("start_date < ?", Date.today).exists?
   end
 
   def past_events

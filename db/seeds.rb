@@ -129,7 +129,6 @@ EventIdea.create([
   { name: 'Wash My Hair' },
   { name: 'Coach Someone' },
   { name: 'Go to a Restaurant' },
-  { name: 'See or Smell a Flower or Plant' },
   { name: 'Use Cologne, Perfume, or Aftershave' },
   { name: 'Reminisce or Talk About Old Times' },
   { name: 'Get Up Early in the Morning' },

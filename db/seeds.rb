@@ -112,7 +112,7 @@ EventIdea.create([
   { name: 'Be with My Parents' },
   { name: 'Ride a Horse' },
   { name: 'Talk on the Telephone' },
-  { name: 'Have Daydreams' },
+  { name: 'Daydream' },
   { name: 'Kick Leaves, Sand, Pebbles, etc.' },
   { name: 'Play Lawn Sports (Badminton, Croquet, Shuffleboard, Horseshoes, etc.)' },
   { name: 'Go to School Reunions, Alumni Meetings, etc.' },

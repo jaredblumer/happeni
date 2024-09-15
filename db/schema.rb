@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_09_13_021507) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "event_ideas", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -18,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_13_021507) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.date "start_date"
     t.time "start_time"

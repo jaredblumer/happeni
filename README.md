@@ -2,7 +2,7 @@
 
 Inspired by Cognitive Behavioral Therapy (CBT), Happeni empowers users to create happiness by choosing and anticipating upcoming pleasant events. With personalized reminders, we help you stay focused on the positive moments that brighten your life.
 
-View the app at ![Happeni.com](https://happeni.com/)
+View the app at [Happeni.com](https://happeni.com/)
 
 ![Happeni Screen Recording](./app/assets/media/screen-recording.gif)
 

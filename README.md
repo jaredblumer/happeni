@@ -2,6 +2,8 @@
 
 Inspired by Cognitive Behavioral Therapy (CBT), Happeni empowers users to create happiness by choosing and anticipating upcoming pleasant events. With personalized reminders, we help you stay focused on the positive moments that brighten your life.
 
+View the app at ![Happeni.com](https://happeni.com/)
+
 ![Happeni Screen Recording](./app/assets/media/screen-recording.gif)
 
 ## Overview
@@ -20,10 +22,9 @@ This Ruby on Rails application allows users to log pleasant events they are look
 
 The following tasks are yet to be completed:
 
-- **Create Daily Reminder Email:** Build daily reminder email listing upcoming future events and the number of days until the events arrive.
-- **Build Forgot Password Email:** Utilize Devise to create a Forgot Password email.
+- **Create Daily/Weekly Reminder Email:** Build daily reminder email listing upcoming future events and the number of days until the events arrive.
 - **Write Tests:** Utilize Capybara and RSpec to write tests.
-- **Deploy Application:** Deploy the application to Heroku.
+- **Create Account Page:** Create account page to update password, change password, and delete account.
 
 ## Running the Application
 

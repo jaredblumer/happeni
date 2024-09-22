@@ -2,7 +2,7 @@
   
   <% if event.errors.any? %>
     <div id="error_explanation" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-      <h2 class="font-semibold mb-2"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <h2 class="font-semibold mb-1"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
       <ul class="list-disc pl-5">
         <% event.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -12,35 +12,77 @@
   <% end %>
 
   <div class="mb-4">
-    <%= form.label :name, "Event Name", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.label :name, "Event Name", class: "block text-gray-700 font-semibold mb-1" %>
     <%= form.text_field :name, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :start_date, "Date", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= form.label :start_date, "Date", class: "block text-gray-700 font-semibold mb-1" %>
     <%= form.date_select :start_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
-  </div>
-
-  <div class="mb-4">
-    <%= form.label :all_day, "All Day", class: "block text-gray-700 font-semibold mb-2" %>
-    <%= form.check_box :all_day, id: "all_day_checkbox", class: "form-checkbox text-indigo-600" %>
   </div>
 
   <div id="time_fields" class="grid grid-cols-2 gap-4">
     <div class="mb-4">
-      <%= form.label :start_time, "Start Time", class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.label :start_time, "Start Time", class: "block text-gray-700 font-semibold mb-1" %>
       <%= form.time_select :start_time, ampm: true, minute_step: 15, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
 
     <div class="mb-4">
-      <%= form.label :end_time, "End Time", class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.label :end_time, "End Time", class: "block text-gray-700 font-semibold mb-1" %>
       <%= form.time_select :end_time, ampm: true, minute_step: 15, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
   </div>
 
   <div class="mb-4">
-    <%= form.label :location, "Location", class: "block text-gray-700 font-semibold mb-2" %>
-    <%= form.text_field :location, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+    <%= form.label :all_day, "All Day", class: "block text-gray-700 font-semibold mb-1" %>
+    <%= form.check_box :all_day, id: "all_day_checkbox", class: "form-checkbox text-indigo-600" %>
+  </div>
+
+  <div class="mb-4 w-full">
+    <%= form.label :recurring_event, "Recurring Event", class: "block text-gray-700 font-semibold mb-1" %>
+    <%= form.select :recurring_event, 
+    options_for_select(['Does Not Repeat', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Custom'], 'Does Not repeat'), 
+    {},
+    class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+  </div>
+
+  <div id="recurring_custom_fields" style="display:none">
+    <div class="mb-4">
+      <%= form.label :recurrence_frequency, "Repeat Every", class: "block text-gray-700 font-semibold mb-1" %>
+      <div class="flex items-center space-x-2">
+        <%= form.number_field :recurrence_frequency, in: 1..100, value: 1, id: 'recurrence_frequency', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+        <%= form.select :recurrence_unit,
+        options_for_select(['Day', 'Week', 'Month', 'Year'], 'Day'),
+        {},
+        class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :ends, "Ends", class: "block text-gray-700 font-semibold mb-1" %>
+      <div class="flex items-center space-x-2">
+        <%= form.select :recurrence_unit,
+        options_for_select(['Never', 'On date...', 'After...'], 'Never'), 
+        {},
+        id: "recurrence_unit",
+        class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+    </div>
+
+    <div id="recurring_end_date" class="mb-4" style="display:none">
+      <%= form.label :recurring_end_date, "Ends On", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_select :recurring_end_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+    </div>
+
+    <div class="mb-4" style="display:none">
+      <%= form.label :after_occurrences, "Ends On", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_select :after_occurrences, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+    </div>
+  </div>
+
+  <div id="number_of_occurrences" class="mb-4" style="display:none">
+    <%= form.label :number_of_occurrences, "Ends After...", class: "block text-gray-700 font-semibold mb-1" %>
+    <%= form.number_field :number_of_occurrences, in: 1..100, value: 1, id: 'number_of_occurrences', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %> occurrence(s)
   </div>
 
   <div class="mt-6">
@@ -50,22 +92,83 @@
 <% end %>
 
 <script>
-  document.addEventListener("turbo:load", () => {
-      const allDayCheckbox = document.getElementById("all_day_checkbox");
-      const timeFields = document.getElementById("time_fields");
+  function handleAllDayToggle() {
+    const allDayCheckbox = document.getElementById("all_day_checkbox");
+    const timeFields = document.getElementById("time_fields");
 
-      if (allDayCheckbox && timeFields) {
-        function toggleTimeFields() {
-          if (allDayCheckbox.checked) {
-              timeFields.style.display = "none";
-          } else {
-              timeFields.style.display = "grid";
-          }
+    if (allDayCheckbox && timeFields) {
+      function toggleTimeFields() {
+        if (allDayCheckbox.checked) {
+          timeFields.style.display = "none";
+        } else {
+          timeFields.style.display = "grid";
         }
-
-        toggleTimeFields();
-
-        allDayCheckbox.addEventListener("change", toggleTimeFields);
       }
+
+      toggleTimeFields();
+
+      allDayCheckbox.addEventListener("change", toggleTimeFields);
+    }
+  }
+
+  function handleRecurringCustom() {
+    const recurringEventSelect = document.getElementById("event_recurring_event");
+    const recurringCustomFields = document.getElementById("recurring_custom_fields");
+
+    if (recurringEventSelect && recurringCustomFields) {
+      function toggleRecurringCustomFields() {
+        if (recurringEventSelect.value === "Custom") {
+          recurringCustomFields.style.display = "grid";
+        } else {
+          recurringCustomFields.style.display = "none";
+        }
+      }
+
+      toggleRecurringCustomFields();
+
+      recurringEventSelect.addEventListener("change", toggleRecurringCustomFields);
+    }
+  }
+
+  function handleEnds() {
+    const recurrenceUnitSelect = document.getElementById("recurrence_unit");
+    const recurringEndDate = document.getElementById("recurring_end_date");
+    const numberOfOccurrences = document.getElementById("number_of_occurrences");
+
+    if (recurrenceUnitSelect && recurringEndDate && numberOfOccurrences) {
+      function toggleRecurringEndDate() {
+        if (recurrenceUnitSelect.value === "On date...") {
+          recurringEndDate.style.display = "block";
+          numberOfOccurrences.style.display = "none";
+        } else if (recurrenceUnitSelect.value === "After...") {
+          recurringEndDate.style.display = "none";
+          numberOfOccurrences.style.display = "block";
+        } else {
+          recurringEndDate.style.display = "none";
+          numberOfOccurrences.style.display = "none";
+        }
+      }
+
+      toggleRecurringEndDate();
+
+      recurrenceUnitSelect.addEventListener("change", toggleRecurringEndDate);
+    }
+  }
+
+  document.addEventListener("turbo:load", () => {
+    handleAllDayToggle();
+    handleRecurringCustom();
+    handleEnds();
+  });
+
+  document.addEventListener("turbo:load", () => {
+    const dateSelects = document.querySelectorAll("select[id^='event_start_date']");
+    const timeSelects = document.querySelectorAll("select[id^='event_start_time'], select[id^='event_end_time']");
+    const recurringEndDateSelects = document.querySelectorAll("select[id^='event_recurring_end_date']");
+    const allSelects = [...dateSelects, ...timeSelects, ...recurringEndDateSelects];
+
+    allSelects.forEach(select => {
+      select.classList.add("p-20", "border", "border-gray-300", "rounded-lg", "focus:ring-2", "focus:ring-indigo-500");
+    });
   });
 </script>

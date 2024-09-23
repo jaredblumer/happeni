@@ -39,20 +39,20 @@
   </div>
 
   <div class="mb-4 w-full">
-    <%= form.label :recurring_event, "Recurring Event", class: "block text-gray-700 font-semibold mb-1" %>
-    <%= form.select :recurring_event, 
-    options_for_select(['Does Not Repeat', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Custom'], 'Does Not repeat'), 
+    <%= form.label :recurrence_type, "Recurring Event", class: "block text-gray-700 font-semibold mb-1" %>
+    <%= form.select :recurrence_type, 
+    options_for_select(['Does Not Repeat', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Custom'], @event.recurrence_type), 
     {},
     class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
 
-  <div id="recurring_custom_fields" style="display:none">
+  <div id="custom_recurring_fields" style="display:none">
     <div class="mb-4">
-      <%= form.label :recurrence_frequency, "Repeat Every", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.label :custom_recurring_fields, "Repeat Every", class: "block text-gray-700 font-semibold mb-1" %>
       <div class="flex items-center space-x-2">
-        <%= form.number_field :recurrence_frequency, in: 1..100, value: 1, id: 'recurrence_frequency', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
-        <%= form.select :recurrence_unit,
-        options_for_select(['Day', 'Week', 'Month', 'Year'], 'Day'),
+        <%= form.number_field :custom_recurrence_frequency, in: 1..100, value: @event.custom_recurrence_frequency, id: 'recurrence_frequency', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+        <%= form.select :custom_recurrence_unit,
+        options_for_select(['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)'], @event.custom_recurrence_frequency),
         {},
         class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
       </div>
@@ -61,28 +61,23 @@
     <div class="mb-4">
       <%= form.label :ends, "Ends", class: "block text-gray-700 font-semibold mb-1" %>
       <div class="flex items-center space-x-2">
-        <%= form.select :recurrence_unit,
-        options_for_select(['Never', 'On date...', 'After...'], 'Never'), 
+        <%= form.select :ends_recurrence_unit,
+        options_for_select(['Never', 'On date...', 'After...'], @event.ends_recurrence_unit), 
         {},
-        id: "recurrence_unit",
+        id: "ends_recurrence_unit",
         class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
       </div>
     </div>
 
-    <div id="recurring_end_date" class="mb-4" style="display:none">
-      <%= form.label :recurring_end_date, "Ends On", class: "block text-gray-700 font-semibold mb-1" %>
-      <%= form.date_select :recurring_end_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
-    </div>
-
-    <div class="mb-4" style="display:none">
-      <%= form.label :after_occurrences, "Ends On", class: "block text-gray-700 font-semibold mb-1" %>
-      <%= form.date_select :after_occurrences, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+    <div id="ends_recurrence_date" class="mb-4" style="display:none">
+      <%= form.label :ends_recurrence_date, "Ends On", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.date_select :ends_recurrence_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
   </div>
 
   <div id="number_of_occurrences" class="mb-4" style="display:none">
     <%= form.label :number_of_occurrences, "Ends After...", class: "block text-gray-700 font-semibold mb-1" %>
-    <%= form.number_field :number_of_occurrences, in: 1..100, value: 1, id: 'number_of_occurrences', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %> occurrence(s)
+    <%= form.number_field :number_of_occurrences, in: 1..100, value: @event.number_of_occurrences, id: 'number_of_occurrences', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %> occurrence(s)
   </div>
 
   <div class="mt-6">
@@ -112,8 +107,8 @@
   }
 
   function handleRecurringCustom() {
-    const recurringEventSelect = document.getElementById("event_recurring_event");
-    const recurringCustomFields = document.getElementById("recurring_custom_fields");
+    const recurringEventSelect = document.getElementById("event_recurrence_type");
+    const recurringCustomFields = document.getElementById("custom_recurring_fields");
 
     if (recurringEventSelect && recurringCustomFields) {
       function toggleRecurringCustomFields() {
@@ -131,16 +126,16 @@
   }
 
   function handleEnds() {
-    const recurrenceUnitSelect = document.getElementById("recurrence_unit");
-    const recurringEndDate = document.getElementById("recurring_end_date");
+    const endsRecurrenceUnitSelect = document.getElementById("ends_recurrence_unit");
+    const recurringEndDate = document.getElementById("ends_recurrence_date");
     const numberOfOccurrences = document.getElementById("number_of_occurrences");
 
-    if (recurrenceUnitSelect && recurringEndDate && numberOfOccurrences) {
+    if (endsRecurrenceUnitSelect && recurringEndDate && numberOfOccurrences) {
       function toggleRecurringEndDate() {
-        if (recurrenceUnitSelect.value === "On date...") {
+        if (endsRecurrenceUnitSelect.value === "On date...") {
           recurringEndDate.style.display = "block";
           numberOfOccurrences.style.display = "none";
-        } else if (recurrenceUnitSelect.value === "After...") {
+        } else if (endsRecurrenceUnitSelect.value === "After...") {
           recurringEndDate.style.display = "none";
           numberOfOccurrences.style.display = "block";
         } else {
@@ -151,7 +146,7 @@
 
       toggleRecurringEndDate();
 
-      recurrenceUnitSelect.addEventListener("change", toggleRecurringEndDate);
+      endsRecurrenceUnitSelect.addEventListener("change", toggleRecurringEndDate);
     }
   }
 
@@ -164,7 +159,7 @@
   document.addEventListener("turbo:load", () => {
     const dateSelects = document.querySelectorAll("select[id^='event_start_date']");
     const timeSelects = document.querySelectorAll("select[id^='event_start_time'], select[id^='event_end_time']");
-    const recurringEndDateSelects = document.querySelectorAll("select[id^='event_recurring_end_date']");
+    const recurringEndDateSelects = document.querySelectorAll("select[id^='event_ends_recurrence_date']");
     const allSelects = [...dateSelects, ...timeSelects, ...recurringEndDateSelects];
 
     allSelects.forEach(select => {

@@ -3,6 +3,8 @@ class Event < ApplicationRecord
 
   validates :name, presence: true
 
+  before_save :sanitize_recurrence_details
+
   def days_away
     days_diff = (start_date - Date.today).to_i
     if days_diff > 0
@@ -30,5 +32,16 @@ class Event < ApplicationRecord
       "time" => time_range,
       "location" => location
     }
+  end
+
+  def sanitize_recurrence_details
+    case recurrence_type
+    when "Does Not Repeat", "Daily", "Weekly", "Monthly", "Yearly"
+      self.custom_recurrence_frequency = nil
+      self.custom_recurrence_unit = nil
+      self.ends_recurrence_unit = nil
+      self.ends_recurrence_date = nil
+      self.number_of_occurrences = nil
+    end
   end
 end

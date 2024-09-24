@@ -50,9 +50,9 @@
     <div class="mb-4">
       <%= form.label :custom_recurring_fields, "Repeat Every", class: "block text-gray-700 font-semibold mb-1" %>
       <div class="flex items-center space-x-2">
-        <%= form.number_field :custom_recurrence_frequency, in: 1..100, value: @event.custom_recurrence_frequency, id: 'recurrence_frequency', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+        <%= form.number_field :custom_recurrence_frequency, in: 1..100, value: (@event.custom_recurrence_frequency || 1), id: 'recurrence_frequency', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
         <%= form.select :custom_recurrence_unit,
-        options_for_select(['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)'], @event.custom_recurrence_frequency),
+        options_for_select(['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)'], (@event.custom_recurrence_unit || "Day(s)")),
         {},
         class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
       </div>
@@ -62,7 +62,7 @@
       <%= form.label :ends, "Ends", class: "block text-gray-700 font-semibold mb-1" %>
       <div class="flex items-center space-x-2">
         <%= form.select :ends_recurrence_unit,
-        options_for_select(['Never', 'On date...', 'After...'], @event.ends_recurrence_unit), 
+        options_for_select(['Never', 'On date...', 'After...'], (@event.ends_recurrence_unit || "Never")), 
         {},
         id: "ends_recurrence_unit",
         class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
@@ -73,11 +73,11 @@
       <%= form.label :ends_recurrence_date, "Ends On", class: "block text-gray-700 font-semibold mb-1" %>
       <%= form.date_select :ends_recurrence_date, order: [:month, :day, :year], start_year: Date.today.year, end_year: Date.today.year + 10, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
-  </div>
 
-  <div id="number_of_occurrences" class="mb-4" style="display:none">
-    <%= form.label :number_of_occurrences, "Ends After...", class: "block text-gray-700 font-semibold mb-1" %>
-    <%= form.number_field :number_of_occurrences, in: 1..100, value: @event.number_of_occurrences, id: 'number_of_occurrences', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %> occurrence(s)
+    <div id="number_of_occurrences" class="mb-4" style="display:none">
+      <%= form.label :number_of_occurrences, "Ends After...", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.number_field :number_of_occurrences, in: 1..100, value: (@event.number_of_occurrences || 1), id: 'number_of_occurrences', class: "border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %> occurrence(s)
+    </div>
   </div>
 
   <div class="mt-6">

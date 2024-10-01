@@ -36,6 +36,8 @@ gem "bootsnap", require: false
 
 gem "devise", "~> 4.9"
 
+gem "montrose"
+
 gem "tailwindcss-rails", "~> 2.7"
 
 gem "postmark"

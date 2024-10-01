@@ -137,6 +137,8 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.25.1)
+    montrose (0.16.0)
+      activesupport (>= 5.2, < 8)
     msgpack (1.7.2)
     net-imap (0.4.15)
       date
@@ -334,6 +336,7 @@ DEPENDENCIES
   devise (~> 4.9)
   importmap-rails
   jbuilder
+  montrose
   pg
   postmark
   puma (>= 5.0)

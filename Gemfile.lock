@@ -168,8 +168,6 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.8)
-    postmark (1.25.1)
-      json
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -255,6 +253,7 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
+    ruby_http_client (3.5.5)
     rubyzip (2.3.2)
     securerandom (0.3.1)
     selenium-webdriver (4.24.0)
@@ -263,6 +262,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sendgrid-ruby (6.7.0)
+      ruby_http_client (~> 3.4)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -338,11 +339,11 @@ DEPENDENCIES
   jbuilder
   montrose
   pg
-  postmark
   puma (>= 5.0)
   rails (~> 7.2.0)
   rubocop-rails-omakase
   selenium-webdriver
+  sendgrid-ruby
   sprockets-rails
   stimulus-rails
   tailwindcss-rails (~> 2.7)

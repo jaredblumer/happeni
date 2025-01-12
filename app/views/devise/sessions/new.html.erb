@@ -8,11 +8,11 @@
     <div class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
       <h2 class="text-gray-900 text-xl font-medium title-font mb-2">Log In</h2>
 
-       <% if flash[:notice] %>
-          <div id="notice_flash" class="text-sm text-indigo-500">
-            <%= flash[:notice] %>
-          </div>
-        <% end %>
+      <% if flash[:notice] %>
+        <div id="notice_flash" class="text-sm text-indigo-500">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 

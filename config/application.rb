@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module PleasantEvents
+module Happeni
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
@@ -23,16 +23,5 @@ module PleasantEvents
     #
     # config.time_zone = "Eastern Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address:              "smtp.postmarkapp.com",
-      port:                 587,
-      domain:               "happeni.com",
-      user_name:            ENV["POSTMARK_API_KEY"],
-      password:             ENV["POSTMARK_API_KEY"],
-      authentication:       :plain,
-      enable_starttls_auto: true
-    }
   end
 end

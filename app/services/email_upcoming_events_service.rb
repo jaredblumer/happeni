@@ -1,6 +1,6 @@
 class EmailUpcomingEventsService
   def initialize
-    @postmark_service = PostmarkEmailService.new
+    # @postmark_service = PostmarkEmailService.new
   end
 
   def send_upcoming_event_emails
@@ -26,21 +26,21 @@ class EmailUpcomingEventsService
   end
 
   def send_upcoming_events_email(to:, template_model_events:)
-    @postmark_service.client.deliver_with_template(
-      from: "hello@happeni.com",
-      to: to,
-      template_id: ENV["UPCOMING_EVENTS_TEMPLATE_ID"],
-      template_model: {
-        "events": template_model_events
-      })
+    # @postmark_service.client.deliver_with_template(
+    #   from: "hello@happeni.com",
+    #   to: to,
+    #   template_id: ENV["UPCOMING_EVENTS_TEMPLATE_ID"],
+    #   template_model: {
+    #     "events": template_model_events
+    #   })
   end
 
   def send_no_upcoming_events_email(to:)
-    @postmark_service.client.deliver_with_template(
-      from: "hello@happeni.com",
-      to: to,
-      template_id: ENV["NO_UPCOMING_EVENTS_TEMPLATE_ID"],
-      template_model: {}
-    )
+    # @postmark_service.client.deliver_with_template(
+    #   from: "hello@happeni.com",
+    #   to: to,
+    #   template_id: ENV["NO_UPCOMING_EVENTS_TEMPLATE_ID"],
+    #   template_model: {}
+    # )
   end
 end

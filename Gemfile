@@ -40,20 +40,21 @@ gem "montrose"
 
 gem "tailwindcss-rails", "~> 2.7"
 
-gem "postmark"
+gem "sendgrid-ruby"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
+  gem "brakeman", "~> 7.0.0"
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
+  gem "pry", "~> 0.15.0"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end

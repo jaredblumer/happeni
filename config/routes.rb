@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     root to: "devise/registrations#new"
   end
+
+  resource :settings, only: [ :show, :update ]
 end

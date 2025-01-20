@@ -8,7 +8,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       redirect_to new_user_confirmation_path
     elsif resource.confirmed?
       # Redirect if already confirmed
-      flash[:notice] = "Your account has been activated. Please sign in to continue."
+      flash[:alert] = "Your account has been activated. Please sign in to continue."
       redirect_to new_user_session_path
     else
       # Proceed with default confirmation logic

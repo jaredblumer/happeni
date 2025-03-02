@@ -1,9 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
+  prepend_before_action :check_captcha, only: [ :create ]
   before_action :check_user_confirmation, only: :create
-
-  def create
-    super
-  end
 
   private
 
@@ -17,6 +14,17 @@ class Users::SessionsController < Devise::SessionsController
       end
     else
       flash[:alert] = "Invalid email or password."
+    end
+  end
+
+  def check_captcha
+    return if verify_recaptcha
+
+    self.resource = resource_class.new sign_in_params
+
+    respond_with_navigational(resource) do
+      flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
+      render :new
     end
   end
 end

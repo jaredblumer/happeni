@@ -42,6 +42,8 @@ gem "tailwindcss-rails", "~> 2.7"
 
 gem "sendgrid-ruby"
 
+gem "recaptcha"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -54,6 +56,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "dotenv"
   gem "pry", "~> 0.15.0"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"

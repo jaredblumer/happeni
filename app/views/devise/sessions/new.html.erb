@@ -1,11 +1,11 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-    <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
+    <div class="md:w-1/2 md:pr-16">
       <h1 class="title-font font-medium text-3xl text-gray-900">Keep Life’s Best Moments Happeni-ing</h1>
       <p class="leading-relaxed mt-4">Create happiness by choosing and anticipating upcoming pleasant events. Log in to cultivate joy through your personal event tracker.</p>
     </div>
 
-    <div class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+    <div class="md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
       <h2 class="text-gray-900 text-xl font-medium title-font mb-2">Log In</h2>
 
       <% if flash[:alert] %>
@@ -14,7 +14,7 @@
         </div>
       <% end %>
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { data: { turbo: false} }) do |f| %>
 
         <div class="relative mb-4">
           <%= f.label :email, class: "leading-7 text-sm text-gray-600" %><br />
@@ -37,6 +37,13 @@
               <%= f.label :remember_me %>
             </div>
           <% end %>
+        </div>
+
+        <div class="relative mb-4">
+          <div class="text-sm text-indigo-500 mb-2">
+            <%= flash[:recaptcha_error] %>
+          </div>
+          <%= recaptcha_tags %>
         </div>
 
         <%= f.submit "Log In", class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-md" %>

@@ -3,8 +3,8 @@
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Email Confirmation</h2>
     <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'space-y-6' }) do |f| %>
       <div class="my-0 text-sm text-indigo-500">
-        <% if flash[:alert] %>
-          <p><%= flash[:alert] %></p>
+        <% if flash[:confirmation_alert] %>
+          <p><%= flash[:confirmation_alert] %></p>
         <% else %>
           <p>Enter your email below to receive a new confirmation email.</p>
         <% end %>
@@ -12,7 +12,7 @@
       <div class="field">
         <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
         <div class="mt-1">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : nil), class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
         </div>
       </div>
       <div class="actions">

@@ -9,11 +9,11 @@ class Users::SessionsController < Devise::SessionsController
 
     if user && user.valid_password?(params[:user][:password])
       unless user.confirmed?
-        flash[:alert] = "Your account is not yet activated. Please check your email for the confirmation link, or request a new one below."
+        flash[:login_alert] = "Your account is not yet activated. Please check your email for the confirmation link, or request a new one below."
         redirect_to new_user_confirmation_path
       end
     else
-      flash[:alert] = "Invalid email or password."
+      flash[:login_alert] = "Invalid email or password."
     end
   end
 

@@ -8,7 +8,8 @@ class SettingsController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-      redirect_to settings_path, notice: "Settings updated successfully."
+      flash[:settings_notice] = "Settings updated successfully."
+      redirect_to settings_path
     else
       render :show
     end

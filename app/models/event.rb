@@ -16,22 +16,12 @@ class Event < ApplicationRecord
     end
   end
 
-  def time_range
+  def date_time
     if all_day
-      "All Day"
+      start_date.strftime("%A, %B %d, %Y")
     else
-      "#{start_time.strftime('%I:%M %p')} - #{end_time.strftime('%I:%M %p')}"
+      "#{start_date.strftime('%A, %B %d, %Y')} | #{start_time.strftime('%I:%M %p')} - #{end_time.strftime('%I:%M %p')}"
     end
-  end
-
-  def as_json_for_email
-    {
-      "days_away" => days_away,
-      "event_name" => name,
-      "date" => start_date.strftime("%A, %B %d, %Y"),
-      "time" => time_range,
-      "location" => location
-    }
   end
 
   def sanitize_recurrence_details

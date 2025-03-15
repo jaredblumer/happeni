@@ -2,7 +2,7 @@ class NoUpcomingEventsMailer < Devise::Mailer
   require "sendgrid-ruby"
   include SendGrid
 
-  def send_email(user)
+  def email(user)
     data = {
       "personalizations": [
         {

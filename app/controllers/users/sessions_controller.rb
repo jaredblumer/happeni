@@ -10,7 +10,7 @@ class Users::SessionsController < Devise::SessionsController
     if user && user.valid_password?(params[:user][:password])
       unless user.confirmed?
         flash[:login_alert] = "Your account is not yet activated. Please check your email for the confirmation link, or request a new one below."
-        redirect_to new_user_confirmation_path
+        redirect_to new_user_confirmation_path and return
       end
     else
       flash[:login_alert] = "Invalid email or password."
@@ -24,7 +24,7 @@ class Users::SessionsController < Devise::SessionsController
 
     respond_with_navigational(resource) do
       flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
-      render :new
+      return render :new
     end
   end
 end

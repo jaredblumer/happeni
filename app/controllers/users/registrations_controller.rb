@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     respond_with_navigational(resource) do
       flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
-      render :new
+      return render :new
     end
   end
 end

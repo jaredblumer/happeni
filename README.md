@@ -12,19 +12,26 @@ This Ruby on Rails application allows users to log pleasant events they are look
 
 ## Features
 
-- **Event Tracking:** Users can add and manage upcoming pleasant events by entering event names and dates.
-- **Reminders:** The app provides regular reminders for upcoming events to keep users engaged and looking forward to their activities.
-- **User-Friendly Interface:** Simple and intuitive design that makes tracking events easy and enjoyable.
+- **Event Tracking** – Add and manage upcoming pleasant events with dates and details.
+- **Reminders** – Personalized reminders to help you anticipate good things.
+- **User-Friendly UI** – Clean, responsive interface styled with TailwindCSS.
+- **Account Management** – Sign-up, login, email confirmation (Devise).
+- **Spam Protection** – Google reCAPTCHA integration on sign-up forms.
+- **Email Delivery** – SendGrid integration for transactional emails.
 
-## To-Do
+## Tech Stack
 
-:construction: Happeni is currently under construction. :construction:
 
-The following tasks are yet to be completed:
-
-- **Create Daily/Weekly Reminder Email:** Build daily reminder email listing upcoming future events and the number of days until the events arrive.
-- **Write Tests:** Utilize Capybara and RSpec to write tests.
-- **Create Account Page:** Create account page to update password, change password, and delete account.
+- **Ruby on Rails 7.2**
+- **PostgreSQL**
+- **TailwindCSS**
+- **Devise** – authentication with confirmation
+- **Hotwire (Turbo + Stimulus)**
+- **SendGrid** – for email delivery
+- **reCAPTCHA** – for spam prevention
+- **RSpec** – test suite
+- **FactoryBot & Faker** – test data generation
+- **Shoulda Matchers** – model spec helpers
 
 ## Running the Application
 
@@ -32,15 +39,31 @@ To run the application, you'll need to start two separate processes: one for the
 
 Follow these steps:
 
-### 1. **Install Dependencies**
+### 1. **Clone and Install Dependencies**
 
 Make sure you have the necessary dependencies installed:
 
 ```bash
+git clone https://github.com/jaredblumer/happeni
+cd happeni
 bundle install
 ```
 
-### 2. Run TailwindCSS Watcher
+### 2. Set Up Environment Variables
+
+Create a `.env` file (or use `credentials.yml.enc`) for:
+
+- `SENDGRID_API_KEY`
+- `RECAPTCHA_SITE_KEY`
+- `RECAPTCHA_SECRET_KEY`
+
+### 3. Set Up the Database
+
+```bash
+bin/rails db:create db:migrate db:seed
+```
+
+### 4. Run TailwindCSS Watcher
 
 In a first terminal window, run the TailwindCSS watcher to compile the CSS when changes are made:
 
@@ -50,13 +73,13 @@ bin/rails tailwindcss:watch
 
 This command will watch for any changes to your TailwindCSS files and compile them automatically.
 
-### 3. Start the Rails Server
+### 5. Start the Rails Server
 
 In the second terminal window, run the Rails server:
 ```bash
 bin/rails server
 ```
 
-### 4. Access the Application
+### 6. Access the Application
 
 Once both processes are running, open your browser and navigate to `http://localhost:3000`

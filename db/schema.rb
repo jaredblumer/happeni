@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_08_004905) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_18_201333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,17 +26,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_004905) do
     t.date "start_date"
     t.time "start_time"
     t.time "end_time"
-    t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "all_day", default: false
-    t.integer "custom_recurrence_frequency"
-    t.string "custom_recurrence_unit"
-    t.string "ends_recurrence_unit"
-    t.datetime "ends_recurrence_date"
-    t.integer "number_of_occurrences"
-    t.string "recurrence_type"
-    t.jsonb "recurrence_data"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 

@@ -27,11 +27,6 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.build(event_params)
 
-    if @event.recurrence_type != "Does Not Repeat"
-      montrose_schedule = build_montrose_schedule(@event)
-      @event.recurrence_data = montrose_schedule.to_hash.to_json
-    end
-
     if @event.save
       redirect_to events_path
     else
@@ -41,12 +36,6 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      if @event.recurrence_type != "Does Not Repeat"
-        montrose_schedule = build_montrose_schedule(@event)
-        @event.update_column(:recurrence_data, montrose_schedule.to_hash.to_json)
-      else
-        @event.update_column(:recurrence_data, nil)
-      end
       redirect_to events_path
     else
       render :edit
@@ -60,52 +49,11 @@ class EventsController < ApplicationController
 
   private
 
-  def build_montrose_schedule(event)
-    recurrence_unit_mapping = {
-      "Day(s)" => :day,
-      "Week(s)" => :week,
-      "Month(s)" => :month,
-      "Year(s)" => :year
-    }
-
-    options = {
-      interval: event.custom_recurrence_frequency || 1,
-      starts: event.start_date
-    }
-
-    if event.recurrence_type == "Custom"
-      unit = recurrence_unit_mapping[event.custom_recurrence_unit]
-      options[:every] = unit
-    else
-      case event.recurrence_type
-      when "Daily"
-        options[:every] = :day
-      when "Weekly"
-        options[:every] = :week
-      when "Monthly"
-        options[:every] = :month
-      when "Yearly"
-        options[:every] = :year
-      end
-    end
-
-    if event.ends_recurrence_unit == "On date..."
-      options[:until] = event.ends_recurrence_date
-    elsif event.ends_recurrence_unit == "After..."
-      options[:total] = event.number_of_occurrences
-    end
-
-    Montrose.every(options[:every], interval: options[:interval], starts: options[:starts], until: options[:until], total: options[:total])
-  end
-
   def set_event
     @event = current_user.events.find(params[:id])
   end
 
   def event_params
-    params.require(:event).permit(:user_id, :name, :start_date, :start_time, :end_time, :location, :all_day,
-                                  :recurrence_type, :recurrence_frequency, :custom_recurrence_frequency,
-                                  :custom_recurrence_unit, :ends_recurrence_unit, :ends_recurrence_date,
-                                  :number_of_occurrences)
+    params.require(:event).permit(:user_id, :name, :start_date, :start_time, :end_time, :location, :all_day)
   end
 end

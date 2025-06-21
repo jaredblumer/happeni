@@ -38,7 +38,7 @@ gem "devise", "~> 4.9"
 
 gem "mailtrap"
 
-gem "tailwindcss-rails", "~> 2.7"
+gem "tailwindcss-rails", "~> 4.2"
 
 gem "recaptcha"
 

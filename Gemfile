@@ -36,9 +36,9 @@ gem "bootsnap", require: false
 
 gem "devise", "~> 4.9"
 
-gem "tailwindcss-rails", "~> 2.7"
+gem "mailtrap"
 
-gem "sendgrid-ruby"
+gem "tailwindcss-rails", "~> 2.7"
 
 gem "recaptcha"
 

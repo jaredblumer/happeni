@@ -1,32 +1,26 @@
 class NoUpcomingEventsMailer < Devise::Mailer
-  require "sendgrid-ruby"
-  include SendGrid
+  require "mailtrap"
 
   def email(user)
-    data = {
-      "personalizations": [
-        {
-          "to": [
-            {
-              "email": "#{user.email}"
-            }
-          ],
-          "dynamic_template_data": {
-            "subject": "Happeni - Upcoming Events - #{Date.today.strftime('%B %d, %Y')}"
-          }
-        }
+    mail = Mailtrap::Mail::FromTemplate.new(
+      from: { email: "hello@happeni.com", name: "Happeni" },
+      to: [
+        { email: "#{user.email}" }
       ],
-      "from": {
-        "email": "hello@happeni.com"
+      reply_to: { email: "hello@happeni.com", name: "Happeni Support" },
+      template_uuid: Rails.application.credentials.dig(:mailtrap, :no_upcoming_events_template_id),
+      template_variables: {
+        subject: "Happeni - No Upcoming Events - #{Date.today.strftime('%B %d, %Y')}"
       },
-      "template_id": Rails.application.credentials.dig(:sendgrid, :no_upcoming_events_template_id)
-    }.to_json
-    sg = SendGrid::API.new(api_key: Rails.application.credentials.dig(:sendgrid, :api_key))
+    )
+
+    client = Mailtrap::Client.new(api_key: Rails.application.credentials.dig(:mailtrap, :api_key))
+
     begin
-        response = sg.client.mail._("send").post(request_body: data)
+      response = client.send(mail)
     rescue Exception => e
         puts e.message
     end
-    puts "Email to #{user.email} - Status Code: #{response.status_code}"
+    puts "Email to #{user.email} - No Upcoming Events - Successful: #{response[:success]}"
   end
 end

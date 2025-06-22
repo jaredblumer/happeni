@@ -10,7 +10,8 @@ class NoUpcomingEventsMailer < Devise::Mailer
       reply_to: { email: "hello@happeni.com", name: "Happeni Support" },
       template_uuid: Rails.application.credentials.dig(:mailtrap, :no_upcoming_events_template_id),
       template_variables: {
-        subject: "Happeni - No Upcoming Events - #{Date.today.strftime('%B %d, %Y')}"
+        subject: "Happeni - No Upcoming Events - #{Date.today.strftime('%B %d, %Y')}",
+        unsubscribe_token: user.unsubscribe_token
       },
     )
 

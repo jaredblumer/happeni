@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  before_validation :ensure_unsubscribe_token
+  validates :unsubscribe_token, presence: true, uniqueness: true
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -19,5 +20,11 @@ class User < ApplicationRecord
     events.where("start_date >= ?", Date.today.beginning_of_day)
           .order(:start_date, Arel.sql("CASE WHEN all_day THEN 0 ELSE 1 END"), :start_time)
           .limit(5)
+  end
+
+  private
+
+  def ensure_unsubscribe_token
+    self.unsubscribe_token ||= SecureRandom.urlsafe_base64(32)
   end
 end

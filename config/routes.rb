@@ -9,6 +9,15 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
+  get  "/unsubscribe/error", to: "unsubscribe#error", as: :unsubscribe_error
+  get  "/unsubscribe/success", to: "unsubscribe#success", as: :unsubscribe_success
+  get "/unsubscribe", to: "unsubscribe#error", as: :unsubscribe_fallback
+  get "/unsubscribe/:token", to: "unsubscribe#show", as: :unsubscribe
+  post "/unsubscribe/:token/confirm", to: "unsubscribe#confirm", as: :confirm_unsubscribe
+
+  get "/resubscribe/success", to: "unsubscribe#resubscribe_success", as: :resubscribe_success
+  post "/resubscribe/:token", to: "unsubscribe#resubscribe", as: :resubscribe
+
   devise_for :users, controllers: {
     confirmations: "users/confirmations",
     registrations: "users/registrations",

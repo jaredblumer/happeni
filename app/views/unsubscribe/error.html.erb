@@ -1,0 +1,16 @@
+<div class="bg-indigo-500 text-white py-8 px-4 rounded-lg mb-6 text-center shadow-lg">
+  <h1 class="text-4xl font-bold">Email Reminders</h1>
+</div>
+
+<div class="text-center">
+  <div class="flex justify-center mb-4">
+    <p>Your unsubscribe token is invalid.</p>
+  </div>
+  <div class="flex justify-center">
+    <% if user_signed_in? %>
+      <%= button_to 'Manage Your Email Preferences', settings_path, method: :get, remote: true, class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600" %>
+    <% else %>
+      <%= button_to 'Log In to Manage Email Preferences', new_user_session_path, method: :get, remote: true, class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600" %>
+    <% end %>
+  </div>
+</div>

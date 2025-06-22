@@ -1,0 +1,12 @@
+<div class="bg-indigo-500 text-white py-8 px-4 rounded-lg mb-6 text-center shadow-lg">
+  <h1 class="text-4xl font-bold">Email Reminders</h1>
+</div>
+
+<div class="text-center">
+  <div class="flex justify-center mb-4">
+    <p>Are you sure you want to unsubscribe from Happeni emails?</p>
+  </div>
+  <div class="flex justify-center">
+    <%= button_to 'Yes, Unsubscribe Me', confirm_unsubscribe_path(token: @user.unsubscribe_token), method: :post, remote: true, class: "bg-indigo-500 text-white font-medium py-2 px-4 rounded-md hover:bg-indigo-600" %>
+  </div>
+</div>

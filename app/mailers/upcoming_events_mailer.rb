@@ -11,7 +11,8 @@ class UpcomingEventsMailer < Devise::Mailer
       template_uuid: Rails.application.credentials.dig(:mailtrap, :upcoming_events_template_id),
       template_variables: {
         events: generate_event_data(user),
-        subject: "Happeni - Upcoming Events - #{Date.today.strftime('%B %d, %Y')}"
+        subject: "Happeni - Upcoming Events - #{Date.today.strftime('%B %d, %Y')}",
+        unsubscribe_token: user.unsubscribe_token
       },
     )
 

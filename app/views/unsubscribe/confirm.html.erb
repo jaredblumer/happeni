@@ -3,6 +3,11 @@
 </div>
 
 <div class="text-center">
+  <% if flash[:unsubscribe_alert] %>
+    <div class="mb-4 text-indigo-500">
+      <%= flash[:unsubscribe_alert] %>
+    </div>
+  <% end %>
   <div class="flex justify-center mb-4">
     <p>Are you sure you want to unsubscribe from Happeni emails?</p>
   </div>

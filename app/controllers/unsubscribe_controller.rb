@@ -13,7 +13,7 @@ class UnsubscribeController < ApplicationController
     if @user.update(subscribed_to_email: false)
       redirect_to unsubscribe_success_path
     else
-      flash[:alert] = "Sorry, we couldn’t unsubscribe you. Please try again."
+      flash[:unsubscribe_alert] = "Sorry, we couldn’t unsubscribe you. Please try again."
       redirect_to unsubscribe_path(@user.unsubscribe_token)
     end
   end
@@ -26,7 +26,7 @@ class UnsubscribeController < ApplicationController
     if @user.update(subscribed_to_email: true)
       redirect_to resubscribe_success_path
     else
-      flash[:alert] = "We couldn’t resubscribe you. Please try again later."
+      flash[:unsubscribe_alert] = "We couldn’t resubscribe you. Please try again later."
       redirect_to unsubscribe_path(@user.unsubscribe_token)
     end
   end

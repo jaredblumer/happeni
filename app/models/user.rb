@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
-  has_many :events
+  has_many :events, dependent: :destroy
 
   def has_upcoming_events?
     events.where("start_date >= ?", Date.today.beginning_of_day).exists?

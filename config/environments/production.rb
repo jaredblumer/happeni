@@ -75,6 +75,9 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "pleasant_events_production"
 
   config.action_mailer.delivery_method = :mailtrap
+  config.action_mailer.mailtrap_settings = {
+    api_key: Rails.application.credentials.dig(:mailtrap, :api_key)
+  }
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.

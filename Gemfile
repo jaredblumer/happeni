@@ -55,7 +55,7 @@ group :development, :test do
 
   gem "rails-controller-testing"
 
-  gem "rspec-rails", "~> 8.0.0"
+  gem "rspec-rails", "~> 8.0.1"
 
   gem "shoulda-matchers", "~> 5.0"
 

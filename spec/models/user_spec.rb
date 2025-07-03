@@ -30,7 +30,7 @@ RSpec.describe User, type: :model do
 
     context "when the user has only past events" do
       before do
-        create(:event, user: user, start_date: Date.yesterday)
+        create(:event, user: user, start_at: 2.days.ago.beginning_of_day)
       end
 
       it "returns false" do
@@ -38,9 +38,19 @@ RSpec.describe User, type: :model do
       end
     end
 
+    context "when the user has an event today" do
+      before do
+        create(:event, user: user, start_at: Time.zone.now.beginning_of_day + 8.hours)
+      end
+
+      it "returns true" do
+        expect(user.has_upcoming_events?).to be true
+      end
+    end
+
     context "when the user has future events" do
       before do
-        create(:event, user: user, start_date: Date.tomorrow)
+        create(:event, user: user, start_at: 1.day.from_now)
       end
 
       it "returns true" do
@@ -61,20 +71,23 @@ RSpec.describe User, type: :model do
     let(:user) { create(:user) }
 
     before do
-      create(:event, user: user, name: "Past", start_date: Date.yesterday)
-      create(:event, user: user, name: "All Day Event", start_date: Date.today + 1, all_day: true)
-      create(:event, user: user, name: "Morning Event", start_date: Date.today + 1, start_time: "09:00", all_day: false)
-      create(:event, user: user, name: "Evening Event", start_date: Date.today + 1, start_time: "18:00", all_day: false)
+      create(:event, user: user, name: "Past", start_at: 2.days.ago.beginning_of_day)
+      create(:event, user: user, name: "Today Event", start_at: Time.zone.now.beginning_of_day + 10.hours)
+      create(:event, user: user, name: "All Day Event", start_at: 1.day.from_now.beginning_of_day, all_day: true)
+      create(:event, user: user, name: "Morning Event", start_at: 1.day.from_now.change(hour: 9, min: 0), all_day: false)
+      create(:event, user: user, name: "Evening Event", start_at: 1.day.from_now.change(hour: 18, min: 0), all_day: false)
     end
 
-    it "returns only upcoming events ordered by start_date, all_day first, then start_time" do
+    it "returns only upcoming events ordered by start_at" do
       results = user.upcoming_events.map(&:name)
-      expect(results).to eq([ "All Day Event", "Morning Event", "Evening Event" ])
+      expect(results).to eq([
+        "Today Event", "All Day Event", "Morning Event", "Evening Event"
+      ])
       expect(results).not_to include("Past")
     end
 
     it "limits the results to 5 events" do
-      create_list(:event, 10, user: user, start_date: Date.today + 2.days)
+      create_list(:event, 10, user: user, start_at: 2.days.from_now)
       expect(user.upcoming_events.count).to be <= 5
     end
   end

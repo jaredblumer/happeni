@@ -26,7 +26,6 @@ class Users::SessionsController < Devise::SessionsController
         flash.discard(:recaptcha_error)
         render :new
       end
-      return
     end
   end
 end

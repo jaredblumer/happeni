@@ -22,7 +22,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
         flash.discard(:recaptcha_error)
         render :new
       end
-      return
     end
   end
 end

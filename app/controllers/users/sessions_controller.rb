@@ -18,13 +18,15 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def check_captcha
-    return if verify_recaptcha
+    # make sure the resource is initialized first so recaptcha can use it
+    self.resource = resource_class.new(sign_in_params)
 
-    self.resource = resource_class.new sign_in_params
-
-    respond_with_navigational(resource) do
-      flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
-      return render :new
+    unless verify_recaptcha(model: resource)
+      respond_with_navigational(resource) do
+        flash.discard(:recaptcha_error)
+        render :new
+      end
+      return
     end
   end
 end

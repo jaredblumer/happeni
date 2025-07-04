@@ -18,14 +18,18 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def check_captcha
-    # make sure the resource is initialized first so recaptcha can use it
-    self.resource = resource_class.new(sign_in_params)
+  self.resource = resource_class.new(sign_in_params)
 
-    unless verify_recaptcha(model: resource)
-      respond_with_navigational(resource) do
-        flash.discard(:recaptcha_error)
-        render :new
-      end
+  Rails.logger.info("DEBUG: g-recaptcha-response param: #{params['g-recaptcha-response']}")
+  
+  result = verify_recaptcha(model: resource)
+  Rails.logger.info("DEBUG: verify_recaptcha result: #{result.inspect}")
+
+  unless result
+    respond_with_navigational(resource) do
+      flash.discard(:recaptcha_error)
+      render :new
     end
   end
+end
 end

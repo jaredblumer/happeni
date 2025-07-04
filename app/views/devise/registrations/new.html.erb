@@ -1,33 +1,41 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
     <div class="md:w-1/2 md:pr-16">
-      <h1 class="title-font font-medium text-3xl text-gray-900">Make Happiness a Priority with Happeni</h1>
-      <p class="leading-relaxed mt-4">Inspired by Cognitive Behavioral Therapy (CBT), Happeni empowers users to create happiness by choosing and anticipating upcoming pleasant events. With personalized reminders, we help you stay focused on the positive moments that brighten your life.</p>
+      <h1 class="title-font font-medium text-3xl text-gray-900">
+        Make Happiness a Priority with Happeni
+      </h1>
+      <p class="leading-relaxed mt-4">
+        Inspired by Cognitive Behavioral Therapy (CBT), Happeni empowers you to create happiness by choosing and anticipating pleasant events. With personalized reminders, you can stay focused on the positive moments that brighten your life.
+      </p>
     </div>
 
     <div class="md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
       <h2 class="text-gray-900 text-xl font-medium title-font mb-2">Sign Up</h2>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { turbo: false} }) do |f| %>
-
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { turbo: false } }) do |f| %>
         <div class="relative mb-4">
-          <%= f.label :email, class: "leading-7 text-sm text-gray-600" %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+          <%= f.label :email, class: "leading-7 text-sm text-gray-600" %>
+          <%= f.email_field :email,
+                autofocus: true,
+                autocomplete: "email",
+                class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 mt-1 transition-colors duration-200 ease-in-out" %>
         </div>
 
         <div class="relative mb-4">
           <%= f.label :password, class: "leading-7 text-sm text-gray-600" %>
-          <%= f.password_field :password, autocomplete: "new-password", class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+          <%= f.password_field :password,
+                autocomplete: "new-password",
+                class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 mt-1 transition-colors duration-200 ease-in-out" %>
         </div>
 
         <div class="relative mb-4">
-          <%= f.label :password_confirmation, "Password Confirmation", class: "leading-7 text-sm text-gray-600" %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" %>
+          <%= f.label :password_confirmation, "Password Confirmation", class: "leading-7 text-sm text-gray-600" %>
+          <%= f.password_field :password_confirmation,
+                autocomplete: "new-password",
+                class: "w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 mt-1 transition-colors duration-200 ease-in-out" %>
         </div>
 
-        <div class="relative mb-4">
-          <%= render "devise/shared/error_messages", resource: resource %>
-        </div>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="relative mb-4">
           <div class="text-sm text-indigo-500 mb-2">
@@ -36,27 +44,54 @@
           <%= recaptcha_tags callback: "onRecaptchaSuccess" %>
         </div>
 
-        <%= f.submit "Sign Up", id: "signup-submit-button", class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-md" %>
+        <%= f.submit "Sign Up",
+              disabled: true,
+              id: "submit-button",
+              class: "text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" %>
+
         <p class="text-sm text-gray-500 mt-3">
-          Already have an account? <%= link_to "Log in here.", new_session_path(resource_name), class: "text-indigo-500 hover:underline" %>
+          Already have an account?
+          <%= link_to "Log in here.", new_session_path(resource_name), class: "text-indigo-500 hover:underline" %>
         </p>
       <% end %>
     </div>
   </div>
+
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var btn = document.getElementById("signup-submit-button");
+    let recaptchaVerified = false;
+
+    function enableSubmitButton() {
+      const btn = document.getElementById("submit-button");
+      if (btn) {
+        btn.disabled = false;
+        btn.style.cursor = "pointer";
+      }
+    }
+
+    function disableSubmitButton() {
+      const btn = document.getElementById("submit-button");
       if (btn) {
         btn.disabled = true;
+        btn.style.cursor = "not-allowed";
+      }
+    }
+
+    window.onRecaptchaSuccess = function() {
+      recaptchaVerified = true;
+      enableSubmitButton();
+    };
+
+    window.addEventListener("load", function() {
+      disableSubmitButton();
+
+      const form = document.querySelector("form");
+      if (form) {
+        form.addEventListener("submit", function(event) {
+          if (!recaptchaVerified) {
+            event.preventDefault();
+          }
+        });
       }
     });
-
-    window.onRecaptchaSuccess = function () {
-      var signupBtn = document.getElementById("signup-submit-button");
-
-      if (signupBtn) {
-        signupBtn.disabled = false;
-      }
-    };
   </script>
 </section>

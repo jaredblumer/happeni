@@ -5,7 +5,7 @@ class NoUpcomingEventsMailer < Devise::Mailer
     mail = Mailtrap::Mail::FromTemplate.new(
       from: { email: "hello@happeni.com", name: "Happeni" },
       to: [
-        { email: "#{user.email}" }
+        { email: user.email }
       ],
       reply_to: { email: "hello@happeni.com", name: "Happeni Support" },
       template_uuid: Rails.application.credentials.dig(:mailtrap, :no_upcoming_events_template_id),
@@ -19,9 +19,9 @@ class NoUpcomingEventsMailer < Devise::Mailer
 
     begin
       response = client.send(mail)
-    rescue Exception => e
-        puts e.message
+      Rails.logger.info "Email to #{user.email} - No Upcoming Events - successful: #{response[:success]}"
+    rescue StandardError => e
+      Rails.logger.error "NoUpcomingEventsMailer error: #{e.message}"
     end
-    puts "Email to #{user.email} - No Upcoming Events - Successful: #{response[:success]}"
   end
 end

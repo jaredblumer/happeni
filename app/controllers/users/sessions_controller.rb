@@ -19,11 +19,8 @@ class Users::SessionsController < Devise::SessionsController
 
   def check_captcha
   self.resource = resource_class.new(sign_in_params)
-
-  Rails.logger.info("DEBUG: g-recaptcha-response param: #{params['g-recaptcha-response']}")
-
+  
   result = verify_recaptcha(model: resource)
-  Rails.logger.info("DEBUG: verify_recaptcha result: #{result.inspect}")
 
   unless result
     respond_with_navigational(resource) do

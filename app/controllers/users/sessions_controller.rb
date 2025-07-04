@@ -19,7 +19,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def check_captcha
   self.resource = resource_class.new(sign_in_params)
-  
+
   result = verify_recaptcha(model: resource)
 
   unless result

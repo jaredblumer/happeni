@@ -22,6 +22,11 @@ RSpec.describe User, type: :model do
   describe "#has_upcoming_events?" do
     let(:user) { create(:user) }
 
+    around do |example|
+      # Freeze time to a known reference so tests with today/tomorrow are stable
+      travel_to(Time.zone.local(2025, 7, 3, 12, 0, 0)) { example.run }
+    end
+
     context "when the user has no events" do
       it "returns false" do
         expect(user.has_upcoming_events?).to be false
@@ -69,6 +74,11 @@ RSpec.describe User, type: :model do
 
   describe "#upcoming_events" do
     let(:user) { create(:user) }
+
+    around do |example|
+      # Freeze time to a known reference so tests with today/tomorrow are stable
+      travel_to(Time.zone.local(2025, 7, 3, 12, 0, 0)) { example.run }
+    end
 
     before do
       create(:event, user: user, name: "Past", start_at: 2.days.ago.beginning_of_day)

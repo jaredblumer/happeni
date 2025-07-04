@@ -3,8 +3,10 @@ class Event < ApplicationRecord
 
   validates :name, presence: true
 
+  before_validation :adjust_for_all_day
+
   def days_away
-    days_diff = (start_date - Date.today).to_i
+    days_diff = (start_at.to_date - Time.zone.today).to_i
     if days_diff > 0
       "#{days_diff} Day#{'s' if days_diff > 1} Away"
     elsif days_diff == 0
@@ -16,9 +18,17 @@ class Event < ApplicationRecord
 
   def date_time
     if all_day
-      start_date.strftime("%A, %B %d, %Y")
+      start_at.strftime("%A, %B %d, %Y")
     else
-      "#{start_date.strftime('%A, %B %d, %Y')} | #{start_time.strftime('%I:%M %p')} - #{end_time.strftime('%I:%M %p')}"
+      "#{start_at.strftime('%A, %B %d, %Y')} | #{start_at.strftime('%I:%M %p')} - #{end_at.strftime('%I:%M %p')}"
     end
+  end
+
+  private
+
+  def adjust_for_all_day
+    return unless all_day && start_at.present?
+    self.start_at = start_at.beginning_of_day
+    self.end_at   = start_at.end_of_day
   end
 end

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Events", type: :request do
   let(:user) { create(:user) }
-  let!(:upcoming_event) { create(:event, user: user, start_date: Date.today + 1.day) }
-  let!(:past_event) { create(:event, user: user, start_date: Date.today - 1.day) }
+  let!(:upcoming_event) { create(:event, user: user, start_at: 1.day.from_now) }
+  let!(:past_event) { create(:event, user: user, start_at: 1.day.ago) }
 
   before { sign_in user }
 
@@ -29,7 +29,8 @@ RSpec.describe "Events", type: :request do
     it "renders the new event form with default times" do
       get new_event_path
       expect(response).to have_http_status(:ok)
-      expect(assigns(:event).start_time.hour).to eq(12)
+      # because start_at is set to 12 PM in the controller
+      expect(assigns(:event).start_at.hour).to eq(12)
     end
 
     it "pre-fills event name if passed in params" do

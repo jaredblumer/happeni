@@ -3,12 +3,19 @@ class EventsController < ApplicationController
   before_action :set_event, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @events = current_user.events.where("start_date >= ?", Date.today).order(:start_date, :start_time)
-    @past_events_exist = current_user.events.where("start_date < ?", Date.today).exists?
+    @events = current_user.events
+      .where("start_at >= ?", Time.zone.today.beginning_of_day)
+      .order(:start_at)
+
+    @past_events_exist = current_user.events
+      .where("start_at < ?", Time.zone.today.beginning_of_day)
+      .exists?
   end
 
   def past_events
-    @events = current_user.events.where("start_date < ?", Date.today).order(start_date: :desc, start_time: :desc)
+    @events = current_user.events
+      .where("start_at < ?", Time.zone.today.beginning_of_day)
+      .order(start_at: :desc)
   end
 
   def show
@@ -16,9 +23,9 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @event.name = params[:event][:name] if params[:event] && params[:event][:name].present?
-    @event.start_time = Time.current.change(hour: 12, min: 0)
-    @event.end_time = @event.start_time + 1.hour
+    @event.name = params[:event][:name] if params[:event]&.dig(:name).present?
+    @event.start_at = Time.zone.now.change(hour: 12, min: 0)
+    @event.end_at = @event.start_at + 1.hour
   end
 
   def edit
@@ -35,7 +42,9 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update(event_params)
+    @event.assign_attributes(event_params)
+
+    if @event.save
       redirect_to events_path
     else
       render :edit
@@ -54,6 +63,13 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:user_id, :name, :start_date, :start_time, :end_time, :location, :all_day)
+    params.require(:event).permit(
+      :user_id,
+      :name,
+      :location,
+      :all_day,
+      :start_at,
+      :end_at
+    )
   end
 end

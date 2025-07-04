@@ -5,7 +5,7 @@ class UpcomingEventsMailer < Devise::Mailer
     mail = Mailtrap::Mail::FromTemplate.new(
       from: { email: "hello@happeni.com", name: "Happeni" },
       to: [
-        { email: "#{user.email}" }
+        { email: user.email }
       ],
       reply_to: { email: "hello@happeni.com", name: "Happeni Support" },
       template_uuid: Rails.application.credentials.dig(:mailtrap, :upcoming_events_template_id),
@@ -20,10 +20,10 @@ class UpcomingEventsMailer < Devise::Mailer
 
     begin
       response = client.send(mail)
-    rescue Exception => e
-        puts e.message
+      Rails.logger.info "Email to #{user.email} successful: #{response[:success]}"
+    rescue StandardError => e
+      Rails.logger.error "UpcomingEventsMailer error: #{e.message}"
     end
-    puts "Email to #{user.email} - Upcoming Events - Successful: #{response[:success]}"
   end
 
   private

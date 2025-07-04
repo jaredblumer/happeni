@@ -3,10 +3,8 @@ FactoryBot.define do
     association :user
 
     name { Faker::Lorem.sentence(word_count: 3) }
-    start_date { Date.today + 1.day }
-    start_time { Time.zone.parse("10:00 AM") }
-    end_time   { Time.zone.parse("11:00 AM") }
-
+    start_at { Time.zone.now + 1.day + 10.hours }  # tomorrow at 10am
+    end_at   { Time.zone.now + 1.day + 11.hours }  # tomorrow at 11am
     all_day { false }
   end
 end

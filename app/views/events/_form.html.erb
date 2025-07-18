@@ -1,5 +1,5 @@
-<%= form_with model: event, local: true, class: "w-full max-w-lg mx-auto bg-white border-2 border-gray-200 p-8 rounded-lg shadow-lg" do |form| %>
-  
+<%= form_with model: event, local: true, class: "w-full max-w-md mx-auto bg-white border-2 border-gray-200 p-8 rounded-lg shadow-lg" do |form| %>
+
   <% if event.errors.any? %>
     <div id="error_explanation" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
       <h2 class="font-semibold mb-1"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
@@ -17,32 +17,19 @@
   </div>
 
   <div class="mb-4">
-    <%= form.label :start_at, "Date", class: "block text-gray-700 font-semibold mb-1" %>
-    <span id="day_of_week" class="text-gray-600 italic"></span>
-    <%= form.date_select :start_at,
-      order: [:month, :day, :year],
-      start_year: Date.today.year,
-      end_year: Date.today.year + 10,
-      required: true
-    %>
+    <%= form.label :start_date, "Start Date", class: "block text-gray-700 font-semibold mb-1" %>
+    <%= form.date_field :start_date, required: true,
+        class: "inline-block p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
   </div>
 
   <div id="time_fields" class="grid grid-cols-2 gap-4">
     <div class="mb-4">
-      <%= form.label :start_at, "Start Time", class: "block text-gray-700 font-semibold mb-1" %>
-      <%= form.time_select :start_at,
-        ampm: true,
-        minute_step: 15,
-        required: true
-      %>
+      <%= form.label :start_time, "Start Time", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.time_field :start_time, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
     <div class="mb-4">
-      <%= form.label :end_at, "End Time", class: "block text-gray-700 font-semibold mb-1" %>
-      <%= form.time_select :end_at,
-        ampm: true,
-        minute_step: 15,
-        required: true
-      %>
+      <%= form.label :end_time, "End Time", class: "block text-gray-700 font-semibold mb-1" %>
+      <%= form.time_field :end_time, required: true, class: "w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
     </div>
   </div>
 
@@ -64,50 +51,14 @@
 
     if (allDayCheckbox && timeFields) {
       function toggleTimeFields() {
-        if (allDayCheckbox.checked) {
-          timeFields.style.display = "none";
-        } else {
-          timeFields.style.display = "grid";
-        }
+        timeFields.style.display = allDayCheckbox.checked ? "none" : "grid";
       }
       toggleTimeFields();
       allDayCheckbox.addEventListener("change", toggleTimeFields);
     }
   }
 
-  function handleDateChange() {
-    const yearSelect   = document.getElementById("event_start_at_1i");
-    const monthSelect  = document.getElementById("event_start_at_2i");
-    const daySelect    = document.getElementById("event_start_at_3i");
-    const dayOfWeekSpan = document.getElementById("day_of_week");
-
-    function updateDayOfWeek() {
-      const year  = parseInt(yearSelect.value);
-      const month = parseInt(monthSelect.value);
-      const day   = parseInt(daySelect.value);
-
-      if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-        const date = new Date(year, month - 1, day);
-        const weekday = date.toLocaleDateString(undefined, { weekday: 'long' });
-        dayOfWeekSpan.textContent = weekday + ",";
-      } else {
-        dayOfWeekSpan.textContent = "";
-      }
-    }
-    updateDayOfWeek();
-    [yearSelect, monthSelect, daySelect].forEach(select => {
-      select.addEventListener("change", updateDayOfWeek);
-    });
-  }
-
   document.addEventListener("turbo:load", () => {
     handleAllDayToggle();
-    handleDateChange();
-
-    const allSelects = document.querySelectorAll("select[id^='event_start_at'], select[id^='event_end_at']");
-
-    allSelects.forEach(select => {
-      select.classList.add("border", "border-gray-300", "rounded-lg", "focus:ring-2", "focus:ring-indigo-500");
-    });
   });
 </script>

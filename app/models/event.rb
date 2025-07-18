@@ -66,8 +66,14 @@ class Event < ApplicationRecord
       self.start_at = Time.zone.parse("#{@start_date} #{@start_time}")
     end
 
-    if @end_date.present? && @end_time.present?
-      self.end_at = Time.zone.parse("#{@end_date} #{@end_time}")
+    if @end_time.present?
+      end_date_to_use = @end_date.presence || @start_date
+      end_at_candidate = Time.zone.parse("#{end_date_to_use} #{@end_time}")
+      # If end time is before start time and no end_date is given, assume next day
+      if @end_date.blank? && self.start_at.present? && end_at_candidate <= self.start_at
+        end_at_candidate += 1.day
+      end
+      self.end_at = end_at_candidate
     end
   end
 

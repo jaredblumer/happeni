@@ -21,7 +21,7 @@
               <span class="mt-1 text-gray-500 text-sm"><%= event.start_at.strftime("%b %d, %Y") %></span>
               <% unless event.all_day %>
                 <span class="mt-1 text-gray-500 text-xs">
-                  <%= event.start_at.strftime("%I:%M %p") %> - <%= event.end_at.strftime("%I:%M %p") %>
+                  <%= event.start_at&.strftime("%I:%M %p") %> - <%= event.end_at&.strftime("%I:%M %p") %>
                 </span>
               <% end %>
             </div>

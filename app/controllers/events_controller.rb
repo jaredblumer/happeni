@@ -78,6 +78,7 @@ class EventsController < ApplicationController
       :all_day,
       :start_date,
       :start_time,
+      :end_date,
       :end_time
     )
   end

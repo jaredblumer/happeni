@@ -29,8 +29,8 @@ RSpec.describe "Events", type: :request do
     it "renders the new event form with default times" do
       get new_event_path
       expect(response).to have_http_status(:ok)
-      # because start_at is set to 12 PM in the controller
-      expect(assigns(:event).start_at.hour).to eq(12)
+      event = assigns(:event)
+      expect(event.start_time).to eq("12:00")
     end
 
     it "pre-fills event name if passed in params" do

@@ -24,11 +24,21 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.name = params[:event][:name] if params[:event]&.dig(:name).present?
-    @event.start_at = Time.zone.now.change(hour: 12, min: 0)
-    @event.end_at = @event.start_at + 1.hour
+
+    default_start = Time.zone.now.change(hour: 12, min: 0)
+    default_end = default_start + 1.hour
+
+    @event.start_date = default_start.to_date
+    @event.start_time = default_start.strftime("%H:%M")
+    @event.end_date   = default_end.to_date
+    @event.end_time   = default_end.strftime("%H:%M")
   end
 
   def edit
+    @event.start_date = @event.start_at&.to_date
+    @event.start_time = @event.start_at&.strftime("%H:%M")
+    @event.end_date   = @event.end_at&.to_date
+    @event.end_time   = @event.end_at&.strftime("%H:%M")
   end
 
   def create
@@ -64,12 +74,11 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(
-      :user_id,
       :name,
-      :location,
       :all_day,
-      :start_at,
-      :end_at
+      :start_date,
+      :start_time,
+      :end_time
     )
   end
 end
